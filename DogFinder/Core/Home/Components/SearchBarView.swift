@@ -7,12 +7,46 @@
 
 import SwiftUI
 
+
 struct SearchBarView: View {
+    
+    @Binding var searchText: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(
+                    searchText.isEmpty ? Color.secondary :  Color.accent)
+            
+            TextField("Search by ...", text: $searchText)
+                .foregroundStyle(Color.accent)
+                .autocorrectionDisabled(true)
+                .multilineTextAlignment(.leading)
+                .overlay(alignment: .trailing) {
+                    Image(systemName: "xmark.circle.fill")
+                        .padding()
+                        .offset(x: 10)
+                        .foregroundStyle(Color.accent)
+                        .opacity(searchText.isEmpty ? 0.0 : 1.0)
+                        .onTapGesture {
+                            searchText = ""
+                        }
+                }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .font(.headline)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 30)
+                .fill(Color.background)
+                .shadow(color: Color.accent.opacity(0.15),
+                        radius: 10, x: 0.0, y: 0.0)
+        )
+        .padding(.bottom, 20)
     }
 }
 
 #Preview {
-    SearchBarView()
+    SearchBarView(searchText: .constant(""))
 }
+
