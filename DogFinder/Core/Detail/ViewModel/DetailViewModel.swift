@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+class DetailViewModel: ObservableObject {
+    @Published var dog: Breed
+    
+    init(dog: Breed) {
+        self.dog = dog
+    }
+}
