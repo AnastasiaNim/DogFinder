@@ -5,13 +5,12 @@
 //  Created by Anastasia N.  on 26.03.2025.
 //
 import SwiftUI
-// все хорошо было поправил чуток лишние отступы привел все в еще более читабельный вид вынес картинку убрал лишние offset разбил повторяющийся код
-// добавил кнопку назад кастомную
-// все получилось хорошо 🫰🥖🥖🥖
+
 struct BreedDetails: View {
-    @Environment(\.dismiss) private var dismiss // так можно закрывать экран программно это функция
+    @Environment(\.dismiss) private var dismiss 
     let dog: Breed
-    @State var likeButtonIsPressed: Bool = false
+    @EnvironmentObject var favoritesManager: BreedFavoritesManager
+  
     static let textSize: Font = .system(size: 15)
     static let textColor: Color = .secondary
     
@@ -36,6 +35,7 @@ struct BreedDetails: View {
         .safeAreaInset(edge: .top, alignment: .leading) {
             backButton
         }
+        
         .navigationBarBackButtonHidden()
     }
 }
@@ -131,14 +131,18 @@ extension BreedDetails {
     
     private var favoritesButton: some View {
         Button {
-            likeButtonIsPressed.toggle()
+           if favoritesManager.hasAddedBreed(dog.id) {
+               favoritesManager.removeBreed(dog.id)
+            } else {
+                favoritesManager.addBreed(dog)
+            }
             
         } label: {
             
             HStack {
-                Image( systemName: likeButtonIsPressed ? "trash" : "star.fill")
+                Image( systemName: favoritesManager.hasAddedBreed(dog.id) ? "trash" : "star.fill")
                 
-                Text(likeButtonIsPressed ? "Delete from Favorite" : "Add to Favorite")
+                Text(favoritesManager.hasAddedBreed(dog.id) ? "Delete from Favorite" : "Add to Favorite")
             }
             .font(BreedDetails.textSize)
             .fontWeight(.semibold)
@@ -193,6 +197,8 @@ extension BreedDetails {
 
 #Preview {
     BreedDetails(dog: Breed.mockBreeds.first!)
+        .environmentObject(BreedFavoritesManager())
+       
 }
 
 
