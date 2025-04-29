@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RootView: View {
     @StateObject private var favoritesManager = BreedFavoritesManager()
-
+    
     @State var selectedTab = 0
     
     var body: some View {
@@ -43,9 +43,7 @@ struct RootView: View {
             .onAppear {
                 favoritesManager.fetchBreeds()
             }
-            // navigationDestination нужно указывать всегда внутри вью которая обернута NavigationStack и важно все в одном файле! не получится вынести отдельно например внутри HomeSсreen, указываем все типы что используем далее
         }
-       
     }
 }
 
@@ -55,9 +53,7 @@ struct RootView: View {
 }
 
 extension RootView {
-
-    //вынес для удобства в функцию @ViewBuilder он нужен так как типы разные на выходе
-    //подключаем так теперь при выборе прокидывется определенный тип и рендер и инит только в процессе перехода один раз
+    
     @ViewBuilder
     private func makeHomeDestination(_ type: HomeLink) -> some View {
         
@@ -79,10 +75,6 @@ extension RootView {
         }
     }
 }
-
-
-//описание всех нашей навигации в виде типа Hashable так будем все заранее знать кто куда ведет в нашем случае имеем два корневых экрана home и favorites и они подразделяются на details и search и details все это Hashable тип (все это может пригодится для глобально роутинга например через класс потом изучим)
-// это удобно и все заранее конструируем
 
 enum HomeLink: Hashable {
     case details(Breed), search

@@ -8,8 +8,7 @@
 import SwiftUI
 import NukeUI
 
-// пакет https://github.com/kean/Nuke
-// выбрать при добавлении в xcode после установки пакет NukeUI
+
 struct ImageLoader: View {
     let url: URL?
     var body: some View {
@@ -27,7 +26,7 @@ fileprivate struct NukeImageLoader: View {
     @State private var showError: Bool = false
     let url: URL?
     var body: some View {
- 
+        
         LazyImage(url: url) { state in
             if let image = state.image {
                 image

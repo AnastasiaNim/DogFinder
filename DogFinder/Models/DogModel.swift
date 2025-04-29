@@ -6,7 +6,7 @@
 //
 
 import Foundation
-// добавил Hashable
+
 struct Breed: Codable, CustomStringConvertible, Identifiable, Hashable {
 
     let weight, height: Size
@@ -137,7 +137,6 @@ extension Breed {
             imageId: "26pHT3Qk7"
         )
     ]
-    
 }
 
 

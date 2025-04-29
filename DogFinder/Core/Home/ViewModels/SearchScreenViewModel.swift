@@ -26,7 +26,7 @@ class SearchScreenViewModel: ObservableObject {
     
     private var currentPage: Int = 0
     
-    enum SearchState {
+    enum SearchState: Equatable {
         case idle
         case searching
         case result([Breed])
@@ -48,7 +48,6 @@ class SearchScreenViewModel: ObservableObject {
                 resultCancellable?.cancel()
                 searchState = .searching
                 searchResults(for: query)
-                
             }
     }
     
@@ -72,9 +71,6 @@ class SearchScreenViewModel: ObservableObject {
         
         return matched + unmatched
     }
-    
- 
-    
 }
 
 

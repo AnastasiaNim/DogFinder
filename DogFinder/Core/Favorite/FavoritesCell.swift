@@ -69,6 +69,5 @@ extension FavoritesCell {
                         .stroke(Color.accentColor, lineWidth: 1)
                 )
         }
-        
     }
 }

@@ -11,7 +11,6 @@ import CoreData
 final class BreedCoreDataService {
     let context: NSManagedObjectContext
     
-    
     init(context: NSManagedObjectContext) {
         self.context = context
     }
@@ -53,7 +52,7 @@ final class BreedCoreDataService {
     
     private func save() {
         do {
-           try context.save()
+            try context.save()
         } catch {
             print("Save error: \(error.localizedDescription)")
         }
@@ -93,7 +92,7 @@ extension Breed {
         breedEntity.temperament = temperament
         breedEntity.origin = origin
         
-    
+        
         return breedEntity
     }
     

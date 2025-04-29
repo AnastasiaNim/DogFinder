@@ -17,11 +17,8 @@ class BreedFavoritesManager: ObservableObject {
     
     @Published private(set) var breeds: [Breed] = []
     
-//        // для теста
-//    @Published private(set) var breeds: [Breed] = Breed.mockBreeds
-    
     func fetchBreeds() {
-       breeds = breedCoreDataService.getBreedsList()
+        breeds = breedCoreDataService.getBreedsList()
     }
     
     func hasAddedBreed(_ breedId: Int) -> Bool {
@@ -30,15 +27,15 @@ class BreedFavoritesManager: ObservableObject {
     
     func addBreed(_ breed: Breed) {
         guard !hasAddedBreed(breed.id) else { return }
-               breedCoreDataService.addBreed(breed)
-               fetchBreeds()
+        breedCoreDataService.addBreed(breed)
+        fetchBreeds()
     }
     
     func removeBreed(_ breedId: Int) {
         guard hasAddedBreed(breedId) else { return }
-                breedCoreDataService.removeBreed(id: breedId)
-                fetchBreeds()
+        breedCoreDataService.removeBreed(id: breedId)
+        fetchBreeds()
     }
     
-   let breedsMoc = Breed.mockBreeds
+    let breedsMoc = Breed.mockBreeds
 }

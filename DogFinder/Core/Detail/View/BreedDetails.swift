@@ -7,10 +7,10 @@
 import SwiftUI
 
 struct BreedDetails: View {
-    @Environment(\.dismiss) private var dismiss 
+    @Environment(\.dismiss) private var dismiss
     let dog: Breed
     @EnvironmentObject var favoritesManager: BreedFavoritesManager
-  
+    
     static let textSize: Font = .system(size: 15)
     static let textColor: Color = .secondary
     
@@ -46,7 +46,6 @@ extension BreedDetails {
     private func makeImage(size: CGSize) -> some View {
         ImageLoader(url: dog.imageURL)
             .frame(height: size.height * 0.4)
-        //.cornerRadius(50, corners: [.bottomLeft, .bottomRight])
             .shadow(color: .gray.opacity(0.4), radius: 15, y: 10)
     }
     
@@ -131,8 +130,8 @@ extension BreedDetails {
     
     private var favoritesButton: some View {
         Button {
-           if favoritesManager.hasAddedBreed(dog.id) {
-               favoritesManager.removeBreed(dog.id)
+            if favoritesManager.hasAddedBreed(dog.id) {
+                favoritesManager.removeBreed(dog.id)
             } else {
                 favoritesManager.addBreed(dog)
             }
@@ -154,7 +153,6 @@ extension BreedDetails {
         }
     }
     
-    //кастомная кнопка назад
     private var backButton: some View {
         Button {
             dismiss()
@@ -198,7 +196,7 @@ extension BreedDetails {
 #Preview {
     BreedDetails(dog: Breed.mockBreeds.first!)
         .environmentObject(BreedFavoritesManager())
-       
+    
 }
 
 
