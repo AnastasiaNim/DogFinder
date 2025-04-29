@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct RootView: View {
-    
+    @StateObject private var favoritesManager = BreedFavoritesManager()
+
     @State var selectedTab = 0
     
     var body: some View {
@@ -31,6 +32,7 @@ struct RootView: View {
                 }
                 .toolbarBackground(.white, for: .tabBar)
                 .toolbarBackground(.visible, for: .tabBar)
+                .environmentObject(favoritesManager)
             }
             .navigationDestination(for: HomeLink.self) { type in
                 makeHomeDestination(type)
@@ -38,13 +40,18 @@ struct RootView: View {
             .navigationDestination(for: FavoritesLink.self) { type in
                 makeFavoritesDestination(type)
             }
+            .onAppear {
+                favoritesManager.fetchBreeds()
+            }
             // navigationDestination нужно указывать всегда внутри вью которая обернута NavigationStack и важно все в одном файле! не получится вынести отдельно например внутри HomeSсreen, указываем все типы что используем далее
         }
+       
     }
 }
 
 #Preview {
     RootView()
+        .environmentObject(BreedFavoritesManager())
 }
 
 extension RootView {
@@ -57,6 +64,7 @@ extension RootView {
         switch type {
         case .details(let breed):
             BreedDetails(dog: breed)
+                .environmentObject(favoritesManager)
         case .search:
             HomeSearchScreen()
         }
@@ -67,6 +75,7 @@ extension RootView {
         switch type {
         case .details(let breed):
             BreedDetails(dog: breed)
+                .environmentObject(favoritesManager)
         }
     }
 }
