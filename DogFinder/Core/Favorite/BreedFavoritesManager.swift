@@ -1,5 +1,5 @@
 //
-//  BreedFavoriresManager.swift
+//  BreedFavoritesManager.swift
 //  DogFinder
 //
 //  Created by Anastasia N.  on 22.04.2025.

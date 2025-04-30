@@ -27,7 +27,7 @@ class HomeViewModel: ObservableObject {
     func fetchBreeds(for page: Int = 0, for size: Int = 10) {
         
         self.isLoading = true
-        print("\(page)")
+        
         cancellable = DogDataService.list(page: page, size: size)
         
             .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedBreeds) in

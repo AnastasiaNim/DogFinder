@@ -35,7 +35,6 @@ class NetworkingManager {
               response.statusCode >= 200 && response.statusCode < 300 else {
             throw NetworkingError.badURLresponse(url: url)
         }
-        print(String(data: output.data, encoding: .utf8) ?? "No response data")
         return output.data
     }
     
