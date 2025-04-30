@@ -20,23 +20,27 @@ struct FavoritesScreen: View {
         ZStack {
             Color.secondary.opacity(0.2).ignoresSafeArea()
             
-            if favoriteDogs.breeds.isEmpty {
-                emptyFavoritesView
-            } else {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 5) {
-                        headerSection
+            ScrollView {
+                VStack(alignment: .leading, spacing: 5) {
+                    headerSection
+                    greetingSection
+                    if favoriteDogs.breeds.isEmpty {
+                        emptyFavoritesView
+                        
+                    } else {
                         sectionFavoritesBreeds
                     }
-                    .padding(15)
-                    .animation(.easeInOut, value: favoriteDogs.breeds)
-                    
-                    .alert(isPresented: $showAlert, content: deletionAlert)
                 }
+                .padding(15)
+                .animation(.easeInOut, value: favoriteDogs.breeds)
+                
+                .alert(isPresented: $showAlert, content: deletionAlert)
             }
+            .scrollDisabled(favoriteDogs.breeds.isEmpty)
         }
     }
 }
+
 
 #Preview {
     FavoritesScreen()
@@ -45,36 +49,39 @@ struct FavoritesScreen: View {
 
 extension FavoritesScreen {
     
-    
     private var emptyFavoritesView: some View {
         VStack(spacing: 10) {
-            
             Text("You don't have any breeds in your favorites yet.")
                 .foregroundStyle(Color.accent)
             Text("🐩")
         }
         .font(.system(size: 20))
         .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.top, 50)
     }
     
     private var headerSection: some View {
-        Group {
-            Text("Favorites")
-                .font(.leckerliOne(size: 35))
-            
-            Text("Did you find the breed you like? Add this breed to your favorites."
-                .attributed(highlights: ["Add this breed"]))
-            .font(.system(size: 20))
-            .foregroundStyle(.secondary)
-        }
+        
+        Text("Favorites")
+            .font(.leckerliOne(size: 35))
     }
+    
+    private var greetingSection: some View {
+        Text("Did you find the breed you like? Add this breed to your favorites."
+            .attributed(highlights: ["Add this breed"]))
+        .font(.system(size: 20))
+        .foregroundStyle(.secondary)
+        
+    }
+    
     private var sectionFavoritesBreeds: some View {
         LazyVGrid(columns: columns, spacing: 0) {
             ForEach(favoriteDogs.breeds) { breed in
                 NavigationLink(value: FavoritesLink.details(breed)) {
                     FavoritesCell(
                         dog: breed,
-                        onRemove: { 
+                        onRemove: {
                             selectedBreed = breed
                             showAlert = true
                         }
