@@ -36,6 +36,4 @@ class BreedFavoritesManager: ObservableObject {
         breedCoreDataService.removeBreed(id: breedId)
         fetchBreeds()
     }
-    
-    let breedsMoc = Breed.mockBreeds
 }
