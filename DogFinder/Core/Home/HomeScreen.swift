@@ -20,6 +20,8 @@ struct HomeSсreen: View {
                 VStack(alignment: .leading, spacing: 20) {
                     title
                     listBreeds
+                    loader
+                    
                 }
                 .padding()
             }
@@ -57,8 +59,7 @@ extension HomeSсreen {
     }
     
     private var titlePresence: some View {
-        Text("Find your perfect match! Choose a dog breed to explore available companions."
-            .attributed(highlights: ["Choose a dog breed"]))
+        Text(Self.greetingText.attributed(highlights: ["Choose a dog breed"]))
         .font(.system(size: 20))
         .foregroundStyle(.secondary)
     }
@@ -91,6 +92,14 @@ extension HomeSсreen {
                 searchBarButton
             })
             
+        }
+    }
+    
+    @ViewBuilder
+    private var loader: some View {
+        if vm.isLoading {
+            ProgressView()
+                .frame(maxWidth: .infinity, alignment: .center)
         }
     }
 }
